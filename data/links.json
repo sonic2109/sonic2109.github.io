@@ -14,9 +14,15 @@
         },
         {
             "name": "Discord",
-            "url": "https://discord.gg/PWxYugx2KD",
+            "url": "https://discord.gg/7dbPJ82ECP",
             "icon": "discord",
-            "text": "Tớ ăn nằm 24/7 ở Discord."
+            "text": "Tìm tớ tâm sự ở đây nè."
+        },
+        {
+            "name": "Website",
+            "url": "https://nhimsub.com/",
+            "icon": "chrome",
+            "text": "Web dịch vụ mạng xã hội á."
         }
     ]
 } 
