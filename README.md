@@ -4,7 +4,7 @@ Phiên bản hiện tại: **0.0.1**
 
 Trang web cá nhân sinh động để giới thiệu thông tin của Chú Bé Đần (Soníc).
 
-![Preview của trang web](sonic2109.github.io)
+![Preview của trang web](assets/avatar.jpg)
 
 ## Giới thiệu
 
@@ -45,9 +45,9 @@ git clone https://github.com/sonic2109/sonic2109.github.io.git
 
 ## Liên hệ
 
-- Facebook: [Chú Bé Đần](https://www.facebook.com/MinhTan2109/)
-- Instagram: [chubedan](https://www.instagram.com/minhtan.2109/)
-- Discord: [chubedanvn](https://discord.gg/7dbPJ82ECP)
+- Facebook: [Nguyễn Minh Tân](https://www.facebook.com/MinhTan2109/)
+- Instagram: [Nguyễn Minh Tân](https://www.instagram.com/minhtan.2109/)
+- Discord: [Việt Nam Knights](https://discord.gg/7dbPJ82ECP)
 - Website: [nhimsub.com](https://nhimsub.com/)
 
 ## Giấy phép
