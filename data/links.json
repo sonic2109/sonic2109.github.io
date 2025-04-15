@@ -1,0 +1,22 @@
+{
+    "socialLinks": [
+        {
+            "name": "Facebook",
+            "url": "https://www.facebook.com/MinhTan2109/",
+            "icon": "facebook",
+            "text": "Facebook của tớ đây."
+        },
+        {
+            "name": "Instagram",
+            "url": "https://www.instagram.com/minhtan.2109/",
+            "icon": "instagram",
+            "text": "Vài thứ linh tinh tớ chụp."
+        },
+        {
+            "name": "Discord",
+            "url": "https://discord.gg/PWxYugx2KD",
+            "icon": "discord",
+            "text": "Tớ ăn nằm 24/7 ở Discord."
+        }
+    ]
+} 

@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Chú Bé Đần | Bio của Chú Bé Đần</title>
+
+    <!-- /// META ICON (FAVICON) /// -->
+    <link rel="icon" href="assets/avatar.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="assets/avatar.jpg">
+
+    <!-- /// GOOGLE FONTS /// -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- /// IONICONS /// -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+
+    <!-- /// ANIME.JS /// -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <style>
+        /* === CSS RESET & BASE STYLES === */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --color-bg-dark: #0a0a0a;
+            --color-primary: #6366f1;
+            --color-secondary: #8b5cf6;
+            --color-accent: #ec4899;
+            --color-text-primary: #f1f1f1;
+            --color-text-secondary: #a1a1a1;
+            --color-primary-rgb: 99, 102, 241;
+            --color-glitch-1: #00ffff;
+            --color-glitch-2: #ff00ff;
+            --font-primary: 'Space Grotesk', sans-serif;
+            --font-secondary: 'Space Mono', monospace;
+            --grid-size: 30px;
+            --grid-line-color: rgba(var(--color-primary-rgb), 0.08);
+            --grid-line-width: 1px;
+            --transition-speed-fast: 0.2s;
+            --transition-speed-normal: 0.4s;
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 16px;
+            --border-radius-circle: 50%;
+            --space-xxs: 0.25rem;
+            --space-xs: 0.5rem;
+            --space-sm: 0.85rem;
+            --space-md: 1.25rem;
+            --space-lg: 2rem;
+        }
+        html { 
+            font-size: 16px; 
+            scroll-behavior: smooth; 
+        }
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-text-primary);
+            background-color: var(--color-bg-dark);
+            background-image: linear-gradient(to right, var(--grid-line-color) var(--grid-line-width), transparent var(--grid-line-width)),
+                             linear-gradient(to bottom, var(--grid-line-color) var(--grid-line-width), transparent var(--grid-line-width));
+            background-size: var(--grid-size) var(--grid-size);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-sm);
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><path fill="%23cccccc" fill-opacity="0.02" d="M0 0h2v2H0zM2 2h2v2H0z"></path></svg>');
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: -1;
+            animation: scanlines 15s linear infinite;
+        }
+        @keyframes scanlines { 
+            0% { background-position: 0 0; } 
+            100% { background-position: 0 150px; } 
+        }
+
+        /* === MAIN CONTAINER === */
+        #container {
+            background-color: rgba(16, 16, 16, 0.7);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-md);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(var(--color-primary-rgb), 0.15);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        /* === PROFILE SECTION === */
+        #profile {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #profile-image-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: var(--space-xs);
+        }
+        #profile-image-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: var(--border-radius-circle);
+            background: conic-gradient(from 90deg, transparent 0%, var(--color-secondary) 25%, var(--color-primary) 50%, var(--color-secondary) 75%, transparent 100%);
+            filter: blur(12px);
+            z-index: -1;
+            animation: rotateGlow 5s linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #profile img#avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--border-radius-circle);
+            border: 2px solid var(--color-primary);
+            padding: 2px;
+            background-color: var(--color-bg-dark);
+            transition: transform var(--transition-speed-normal) ease, box-shadow var(--transition-speed-normal) ease;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        #profile img#avatar:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 15px var(--color-primary);
+        }
+        #profile p#username {
+            font-weight: 500;
+            font-size: 1.05rem;
+            color: var(--color-text-primary);
+            margin-top: var(--space-xxs);
+            font-family: var(--font-secondary);
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px var(--color-secondary), 1px 1px 1px rgba(0,0,0,0.5);
+            margin-bottom: var(--space-xxs);
+        }
+        #profile p#bio-tagline {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            font-family: var(--font-primary);
+            margin-bottom: var(--space-xs);
+            font-style: italic;
+            opacity: 0.9;
+        }
+        #profile-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: var(--space-xs);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.65rem;
+            font-family: var(--font-secondary);
+            padding: 4px 8px;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--color-text-primary);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            background-color: rgba(16, 16, 16, 0.7);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-speed-fast) ease;
+        }
+        .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+        .badge ion-icon {
+            margin-right: 4px;
+            font-size: 0.85rem;
+        }
+        .icon {
+            width: 1em;
+            height: 1em;
+            margin-right: 0.5em;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .social-icon {
+            fill: currentColor;
+            stroke: none;
+        }
+        #social-links .icon {
+            width: 1.2em;
+            height: 1.2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform var(--transition-speed-fast) ease;
+        }
+        .badge .icon {
+            width: 1.5em;
+            height: 1.5em;
+            margin-right: 0.3em;
+        }
+        .badge-developer {
+            color: var(--color-primary);
+            border-left: 3px solid var(--color-primary);
+        }
+        .badge-location {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(236, 72, 153, 0.2));
+            border-left: 3px solid #ec4899;
+            color: #fca5a5;
+        }
+        .badge-location:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(236, 72, 153, 0.3));
+            border-color: #f472b6;
+        }
+        .badge-language {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border-left: 3px solid #10b981;
+            color: #6ee7b7;
+        }
+        .badge-language:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3));
+            border-color: #34d399;
+        }
+        .badge-available {
+            color: #10b981;
+            border-left: 3px solid #10b981;
+        }
+        .badge-camera {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(79, 70, 229, 0.2));
+            border-left: 3px solid #8b5cf6;
+            color: #c4b5fd;
+        }
+        .badge-camera:hover {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(79, 70, 229, 0.3));
+            border-color: #a78bfa;
+        }
+        .glitch-text {
+            position: relative;
+            text-shadow: 0.05em 0 0 var(--color-glitch-1), -0.025em -0.05em 0 var(--color-glitch-2), 0.025em 0.05em 0 var(--color-glitch-1);
+            animation: glitchAnim 0.5s infinite alternate;
+        }
+        @keyframes glitchAnim {
+            0%{text-shadow:.05em 0 0 var(--color-glitch-1),-.05em -.025em 0 var(--color-glitch-2),-.025em .05em 0 var(--color-glitch-1)}
+            25%{text-shadow:-0.05em -0.025em 0 var(--color-glitch-1),.025em .025em 0 var(--color-glitch-2),-0.05em -0.05em 0 var(--color-glitch-1)}
+            50%{text-shadow:.025em .05em 0 var(--color-glitch-1),.05em 0 0 var(--color-glitch-2),0 -.05em 0 var(--color-glitch-1)}
+            75%{text-shadow:-.05em 0 0 var(--color-glitch-1),-.025em -.025em 0 var(--color-glitch-2),-.025em -.05em 0 var(--color-glitch-1)}
+            100%{text-shadow:-.025em 0 0 var(--color-glitch-1),.025em -.025em 0 var(--color-glitch-2),.05em .05em 0 var(--color-glitch-1)}
+        }
+
+        /* === CLOCK STYLES === */
+        #clock {
+            font-family: var(--font-secondary);
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            letter-spacing: 1.5px;
+            opacity: 0;
+            transform: translateY(10px);
+            text-shadow: 0 0 3px rgba(var(--color-primary-rgb), 0.3);
+            margin-bottom: 0;
+        }
+
+        /* === SECTION HEADING STYLES === */
+        .sci-fi-heading {
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+            color: var(--color-primary);
+            text-align: center;
+            margin-bottom: var(--space-xs);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 4px rgba(var(--color-primary-rgb), 0.4);
+        }
+
+        /* === BIO INFO SECTION === */
+        #bio-section {
+            border-top: 1px solid rgba(var(--color-primary-rgb), 0.15);
+            padding-top: var(--space-sm);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .bio-text {
+            font-size: 1rem;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-xs);
+            text-align: left;
+            line-height: 1.5;
+        }
+        
+        .bio-text .highlight-name {
+            color: #a78bfa;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .bio-text .highlight-blue {
+            color: #818cf8;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        /* === SKILLS SECTION === */
+        #skills-section {
+            border-top: 1px solid rgba(var(--color-primary-rgb), 0.15);
+            padding-top: var(--space-sm);
+            margin-top: var(--space-sm);
+            opacity: 0; 
+            transform: translateY(20px);
+        }
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-xs);
+            justify-content: center;
+            margin-top: var(--space-xs);
+        }
+        .skill-tag {
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+            border: 1px solid rgba(var(--color-primary-rgb), 0.3);
+            border-radius: var(--border-radius-md);
+            padding: var(--space-xxs) var(--space-sm);
+            font-size: 0.85rem;
+            color: var(--color-text-primary);
+            transition: all var(--transition-speed-fast) ease;
+        }
+        .skill-tag:hover {
+            background-color: rgba(var(--color-primary-rgb), 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(var(--color-primary-rgb), 0.3);
+        }
+
+        /* === PROJECTS SECTION === */
+        #projects-section {
+            border-top: 1px solid rgba(var(--color-primary-rgb), 0.15);
+            padding-top: var(--space-sm);
+            margin-top: var(--space-sm);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .projects-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-top: var(--space-xs);
+        }
+        .project-card {
+            background-color: rgba(var(--color-primary-rgb), 0.05);
+            border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+            border-radius: var(--border-radius-md);
+            padding: var(--space-sm);
+            text-align: left;
+            transition: all var(--transition-speed-normal) ease;
+        }
+        .project-card:hover {
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.2);
+        }
+        .project-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-xxs);
+            font-family: var(--font-secondary);
+        }
+        .project-description {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-xs);
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .project-tag {
+            background-color: rgba(var(--color-primary-rgb), 0.15);
+            border-radius: var(--border-radius-sm);
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            color: var(--color-text-primary);
+        }
+
+        /* === CONTACT SECTION === */
+        #contact-section {
+            border-top: 1px solid rgba(var(--color-primary-rgb), 0.15);
+            padding-top: var(--space-sm);
+            margin-top: var(--space-sm);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        /* === LINKS LIST === */
+        #links {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        #links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        #links li {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        #links a {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            gap: var(--space-sm);
+            padding: 0.5rem 1rem;
+            line-height: 1.2;
+            text-decoration: none;
+            color: var(--color-text-primary);
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+            border: 1px solid rgba(var(--color-primary-rgb), 0.5);
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            transition: all var(--transition-speed-fast) ease-out;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            will-change: transform, background-color, box-shadow;
+            font-size: 1.1rem;
+        }
+        #links a span {
+            flex: 1;
+            text-align: center;
+            margin-left: -3em;
+        }
+        #links .icon {
+            width: 2.5em;
+            height: 2.5em;
+            margin-right: 0;
+            flex-shrink: 0;
+        }
+        #links a::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(var(--color-primary-rgb), 0.4), transparent);
+            transition: left var(--transition-speed-normal) ease-out;
+            z-index: -1;
+        }
+        #links a:hover, #links a:focus {
+            background-color: rgba(var(--color-primary-rgb), 0.25);
+            border-color: var(--color-primary);
+            color: #fff;
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.4);
+            outline: none;
+        }
+        #links a:hover::before, #links a:focus::before {
+            left: 100%;
+        }
+        #links a:active {
+            transform: scale(0.98);
+            background-color: rgba(var(--color-primary-rgb), 0.3);
+        }
+        
+        /* === FOOTER === */
+        footer {
+            margin-top: var(--space-xs);
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            opacity: 0;
+            transform: translateY(20px);
+            text-align: center;
+        }
+        footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed-fast) ease, text-shadow var(--transition-speed-fast) ease;
+        }
+        footer a:hover, footer a:focus {
+            color: var(--color-secondary);
+            text-shadow: 0 0 5px var(--color-secondary);
+            outline: none;
+        }
+
+        /* === RESPONSIVENESS === */
+        @media (max-width: 768px) {
+            :root {
+                --space-lg: 1.8rem;
+                --space-md: 1.1rem;
+                --space-sm: 0.75rem;
+            }
+            #container {
+                padding: var(--space-md);
+                margin: var(--space-sm);
+                gap: var(--space-sm);
+            }
+            #profile-image-wrapper {
+                width: 90px;
+                height: 90px;
+            }
+            #profile-badges {
+                gap: 6px;
+            }
+            .badge {
+                font-size: 0.6rem;
+                padding: 3px 6px;
+            }
+            #clock {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 420px) {
+            :root {
+                --space-md: 1rem;
+                --space-sm: 0.65rem;
+            }
+            #profile-image-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+            #profile-badges {
+                gap: 4px;
+            }
+            .badge {
+                font-size: 0.55rem;
+                padding: 2px 5px;
+            }
+            .badge ion-icon {
+                font-size: 0.7rem;
+            }
+            #clock {
+                letter-spacing: 1px;
+            }
+            #links a {
+                padding: var(--space-sm);
+            }
+            .skills-container {
+                justify-content: flex-start;
+            }
+        }
+
+        /* === UTILITY CLASSES === */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* === FOOTER STYLES === */
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+
+        /* === SOCIAL LINKS === */
+        #social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            padding-top: var(--space-sm);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        #social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            font-size: 1.6rem;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--border-radius-circle);
+            text-decoration: none;
+            transition: all var(--transition-speed-fast) ease;
+            will-change: transform, color, background-color;
+            position: relative;
+        }
+        #social-links a:hover, #social-links a:focus {
+            color: var(--color-primary);
+            transform: translateY(-3px);
+            outline: none;
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+        }
+        #social-links .icon {
+            width: 1.2em;
+            height: 1.2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform var(--transition-speed-fast) ease;
+        }
+        #social-links a:hover .icon {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG Sprite -->
+    <div class="visually-hidden">
+        <object data="assets/icons/social-icons.svg" type="image/svg+xml"></object>
+    </div>
+
+    <div id="container">
+        <div id="profile">
+            <div id="profile-image-wrapper">
+                <img id="avatar" src="assets/avatar.jpg" alt="Ảnh đại diện của Chú Bé Đần"/>
+            </div>
+            <p id="username" data-text="Chú Bé Đần">Chú Bé Đần</p>
+            <p id="bio-tagline">Tuy không thông minh nhưng tôi đần</p>
+            <div id="profile-badges">
+                <span class="badge badge-camera">
+                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                        <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                    </svg>
+                    CHỤP LINH TINH
+                </span>
+                <span class="badge badge-location">
+                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                    </svg>
+                    LONG AN
+                </span>
+                <span class="badge badge-language">
+                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M4 5h7" />
+                        <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+                        <path d="M5 9c0 2.144 2.952 3.908 6.7 4" />
+                        <path d="M12 20l4 -9l4 9" />
+                        <path d="M19.1 18h-6.2" />
+                    </svg>
+                    VI/DOG
+                </span>
+            </div>
+        </div>
+
+        <!-- /// BIO INFO SECTION /// -->
+        <section id="bio-section" aria-labelledby="bio-heading">
+            <h2 id="bio-heading" class="sci-fi-heading">GIỚI THIỆU</h2>
+            <p class="bio-text">
+                Tớ là <span class="highlight-name">Chú Bé Đần</span>. Xin chào, các cậu đang xem qua thông tin của một kẻ vừa <span class="highlight-blue">đẹp trai</span> vừa <span class="highlight-blue">lạnh lùng</span>. Rất vui được làm quen cùng các cậu.
+            </p>
+        </section>
+        <!-- /// END BIO INFO /// -->
+
+        <!-- /// CONTACT SECTION /// -->
+        <section id="contact-section" aria-labelledby="contact-heading">
+            <h2 id="contact-heading" class="sci-fi-heading">LIÊN HỆ</h2>
+            <nav id="links" aria-label="Liên hệ và mạng xã hội">
+                <ul>
+                    <li>
+                        <a href="https://facebook.com/chubedanvn" target="_blank" rel="noopener noreferrer">
+                            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                            </svg>
+                            <span>Facebook của tớ đây.</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/chubedan" target="_blank" rel="noopener noreferrer">
+                            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                                <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                <path d="M16.5 7.5l0 .01" />
+                            </svg>
+                            <span>Vài thứ linh tinh tớ chụp.</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://discord.gg/chubedanvn" target="_blank" rel="noopener noreferrer">
+                            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                <path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                <path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-.972 1.923a11.913 11.913 0 0 0 -4.053 0l-.975 -1.923c-1.5 .16 -3.043 .485 -4.5 1.5c-2 5.667 -2.167 9.833 -1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2 -2 2 -3" />
+                                <path d="M7 16.5c3.5 1 6.5 1 10 0" />
+                            </svg>
+                            <span>Tớ ăn nằm 24/7 ở Discord.</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+        <!-- /// END CONTACT SECTION /// -->
+
+        <!-- /// SOCIAL LINKS /// -->
+        <div id="social-links" aria-label="Liên kết mạng xã hội khác">
+            <a href="https://facebook.com/chubedanvn" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
+                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                </svg>
+            </a>
+            <a href="https://instagram.com/chubedan" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                    <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                    <path d="M16.5 7.5l0 .01" />
+                </svg>
+            </a>
+            <a href="https://discord.gg/chubedanvn" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord">
+                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                    <path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                    <path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-.972 1.923a11.913 11.913 0 0 0 -4.053 0l-.975 -1.923c-1.5 .16 -3.043 .485 -4.5 1.5c-2 5.667 -2.167 9.833 -1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2 -2 2 -3" />
+                    <path d="M7 16.5c3.5 1 6.5 1 10 0" />
+                </svg>
+            </a>
+        </div>
+        <!-- /// END SOCIAL LINKS /// -->
+
+        <!-- /// FOOTER /// -->
+        <footer>
+            <div class="copyright">
+                &copy; 2025 Soníc | Thiết kế bởi <a href="https://www.facebook.com/MinhTan2109/" target="_blank" rel="noopener noreferrer">Soníc2109</a>
+            </div>
+        </footer>
+        <!-- /// END FOOTER /// -->
+        
+    </div> <!-- End #container -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // --- LOAD LINKS FROM JSON ---
+            async function loadLinks() {
+                try {
+                    const response = await fetch('data/links.json');
+                    const data = await response.json();
+                    return data.socialLinks;
+                } catch (error) {
+                    console.error('Error loading links:', error);
+                    return [];
+                }
+            }
+
+            // --- RENDER LINKS ---
+            async function renderLinks() {
+                const links = await loadLinks();
+                const linksContainer = document.querySelector('#links ul');
+                const socialLinksContainer = document.querySelector('#social-links');
+
+                if (linksContainer) {
+                    linksContainer.innerHTML = links.map(link => `
+                        <li>
+                            <a href="${link.url}" target="_blank" rel="noopener noreferrer">
+                                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    ${getIconPath(link.icon)}
+                                </svg>
+                                <span>${link.text}</span>
+                            </a>
+                        </li>
+                    `).join('');
+                }
+
+                if (socialLinksContainer) {
+                    socialLinksContainer.innerHTML = links.map(link => `
+                        <a href="${link.url}" target="_blank" rel="noopener noreferrer" aria-label="${link.name}" title="${link.name}">
+                            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                ${getIconPath(link.icon)}
+                            </svg>
+                        </a>
+                    `).join('');
+                }
+            }
+
+            // --- GET ICON PATH ---
+            function getIconPath(iconName) {
+                const icons = {
+                    facebook: `<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                             <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />`,
+                    instagram: `<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                              <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                              <path d="M16.5 7.5l0 .01" />`,
+                    discord: `<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                            <path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                            <path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-.972 1.923a11.913 11.913 0 0 0 -4.053 0l-.975 -1.923c-1.5 .16 -3.043 .485 -4.5 1.5c-2 5.667 -2.167 9.833 -1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2 -2 2 -3" />
+                            <path d="M7 16.5c3.5 1 6.5 1 10 0" />`
+                };
+                return icons[iconName] || '';
+            }
+
+            // --- SET RGB COLOR ---
+            function setPrimaryColorRGB() {
+                try {
+                    const s = window.getComputedStyle(document.documentElement);
+                    let c = s.getPropertyValue('--color-primary').trim();
+                    let r = 99, g = 102, b = 241; // Default color values
+                    
+                    if (c.startsWith('#')) {
+                        const h = c.substring(1);
+                        if (h.length === 3) {
+                            r = parseInt(h[0] + h[0], 16);
+                            g = parseInt(h[1] + h[1], 16);
+                            b = parseInt(h[2] + h[2], 16);
+                        } else if (h.length === 6) {
+                            r = parseInt(h.substring(0, 2), 16);
+                            g = parseInt(h.substring(2, 4), 16);
+                            b = parseInt(h.substring(4, 6), 16);
+                        }
+                    } else if (c.startsWith('rgb')) {
+                        const p = c.match(/(\d+)/g);
+                        if (p && p.length >= 3) {
+                            r = parseInt(p[0], 10);
+                            g = parseInt(p[1], 10);
+                            b = parseInt(p[2], 10);
+                        }
+                    }
+                    
+                    document.documentElement.style.setProperty('--color-primary-rgb', `${r}, ${g}, ${b}`);
+                } catch (e) {
+                    console.error("Error setting primary RGB:", e);
+                    document.documentElement.style.setProperty('--color-primary-rgb', `99, 102, 241`);
+                }
+            }
+            
+            // --- CLOCK UPDATE ---
+            function updateClock() {
+                const clockElement = document.getElementById('clock');
+                if (!clockElement) return;
+                
+                try {
+                    const now = new Date();
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+                    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+                } catch (e) {
+                    console.error("Clock update error:", e);
+                }
+            }
+            
+            // --- INITIALIZE ANIMATIONS ---
+            function initAnimations() {
+                try {
+                    if (typeof anime !== 'undefined') {
+                        const timeline = anime.timeline({
+                            easing: 'easeOutExpo',
+                            duration: 800
+                        });
+                        
+                        timeline.add({
+                            targets: '#container',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 600
+                        })
+                        .add({
+                            targets: ['#profile-image-wrapper', '#profile p#username'],
+                            opacity: [0, 1],
+                            scale: [0.8, 1],
+                            duration: 600
+                        }, '-=450')
+                        .add({
+                            targets: '#bio-section',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500
+                        }, '-=350')
+                        .add({
+                            targets: '#skills-section',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500
+                        }, '-=400')
+                        .add({
+                            targets: '#projects-section',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500
+                        }, '-=400')
+                        .add({
+                            targets: '#contact-section',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500
+                        }, '-=400')
+                        .add({
+                            targets: '#links li',
+                            opacity: [0, 1],
+                            translateX: [-20, 0],
+                            delay: anime.stagger(70)
+                        }, '-=400')
+                        .add({
+                            targets: ['#social-links', 'footer'],
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500
+                        }, '-=400');
+                        
+                        // Glitch effect for username
+                        setTimeout(() => {
+                            const usernameElement = document.getElementById('username');
+                            if (usernameElement) {
+                                usernameElement.classList.add('glitch-text');
+                                setTimeout(() => {
+                                    usernameElement.classList.remove('glitch-text');
+                                }, 1500);
+                            }
+                        }, 1000);
+                        
+                    } else {
+                        // Fallback if anime.js fails to load
+                        document.querySelectorAll('#container, #profile, #clock, #bio-section, #skills-section, #projects-section, #contact-section, #links, #social-links, footer').forEach(el => {
+                            el.style.opacity = 1;
+                            el.style.transform = 'none';
+                        });
+                    }
+                } catch (e) {
+                    console.error("Animation error:", e);
+                    document.querySelectorAll('#container, #profile, #clock, #bio-section, #skills-section, #projects-section, #contact-section, #links, #social-links, footer').forEach(el => {
+                        el.style.opacity = 1;
+                        el.style.transform = 'none';
+                    });
+                }
+            }
+            
+            // --- AVATAR HOVER ANIMATION ---
+            function setupAvatarAnimation() {
+                const avatar = document.getElementById('avatar');
+                if (avatar && typeof anime !== 'undefined') {
+                    avatar.addEventListener('mouseenter', () => {
+                        anime({
+                            targets: avatar,
+                            scale: 1.08,
+                            rotate: 4,
+                            duration: 300,
+                            easing: 'easeOutBack'
+                        });
+                    });
+                    
+                    avatar.addEventListener('mouseleave', () => {
+                        anime({
+                            targets: avatar,
+                            scale: 1,
+                            rotate: 0,
+                            duration: 400,
+                            easing: 'easeOutQuad'
+                        });
+                    });
+                }
+            }
+            
+            // --- SOCIAL LINKS ANIMATION ---
+            function setupSocialLinks() {
+                const socialLinks = document.querySelectorAll('#social-links a');
+                if (socialLinks.length > 0 && typeof anime !== 'undefined') {
+                    socialLinks.forEach(link => {
+                        link.addEventListener('mouseenter', () => {
+                            anime({
+                                targets: link,
+                                translateY: -4,
+                                scale: 1.15,
+                                duration: 250,
+                                easing: 'easeOutBack'
+                            });
+                        });
+                        
+                        link.addEventListener('mouseleave', () => {
+                            anime({
+                                targets: link,
+                                translateY: 0,
+                                scale: 1,
+                                duration: 350,
+                                easing: 'easeOutQuad'
+                            });
+                        });
+                    });
+                }
+            }
+            
+            // --- INITIALIZATION ---
+            setPrimaryColorRGB();
+            updateClock();
+            setInterval(updateClock, 1000);
+            await renderLinks();
+            initAnimations();
+            setupAvatarAnimation();
+            setupSocialLinks();
+            
+            console.log("✅ Initialization complete!");
+        });
+    </script>
+
+</body>
+</html> 
