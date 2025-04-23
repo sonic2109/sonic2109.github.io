@@ -1359,11 +1359,9 @@
                         // Lưu URL gốc
                         const originalURL = link.getAttribute('href');
                         
-                        // Biến theo dõi thời gian chạm
-                        let touchStartTime = 0;
-                        let touchTimer = null;
+                        // Biến theo dõi sự kiện chạm
                         let touchMoved = false;
-                        const TOUCH_DELAY = 400; // Độ trễ 400ms để xác định chạm có chủ ý
+                        let lastTapTime = 0;
                         
                         // Prevent default behavior for all events
                         link.addEventListener('click', handleLinkClick);
@@ -1372,15 +1370,17 @@
                         link.addEventListener('touchend', function(e) {
                             e.preventDefault();
                             
-                            // Hủy bỏ timer
-                            if (touchTimer) {
-                                clearTimeout(touchTimer);
-                                touchTimer = null;
-                            }
-                            
-                            // Kiểm tra nếu đã chạm đủ lâu và không di chuyển
-                            const touchDuration = Date.now() - touchStartTime;
-                            if (touchDuration >= TOUCH_DELAY && !touchMoved && window.touchState.active) {
+                            // Nếu không di chuyển ngón tay, đây là một chạm hợp lệ
+                            if (!touchMoved && window.touchState.active) {
+                                // Hiệu ứng phản hồi khi chạm
+                                anime({
+                                    targets: this,
+                                    scale: [1.1, 1],
+                                    duration: 300,
+                                    easing: 'easeOutElastic(1, 0.5)'
+                                });
+                                
+                                // Mở link ngay lập tức
                                 handleLinkClick(e);
                             } else {
                                 // Đặt lại trạng thái nếu không mở link
@@ -1400,15 +1400,10 @@
                             if (window.touchState.processing) return;
                             window.touchState.processing = true;
                             
-                            console.log("Link clicked: " + originalURL);
-                            
-                            // Reset hiệu ứng ngay lập tức
-                            resetAllEffects();
-                            
                             // Thêm phản hồi thị giác khi mở link
                             link.classList.add('fake-active');
                             
-                            // Sử dụng setTimeout để đảm bảo browser đã kịp reset UI
+                            // Thêm độ trễ nhỏ để hiển thị hiệu ứng trước khi mở link
                             setTimeout(function() {
                                 // Gán URL vào dummy link
                                 dummyLink.href = originalURL;
@@ -1421,25 +1416,23 @@
                                     window.open(originalURL, '_blank');
                                 }
                                 
-                                // Reset processing state sau một khoảng thời gian
+                                // Reset processing state và hiệu ứng
                                 setTimeout(function() {
                                     window.touchState.processing = false;
-                                    link.classList.remove('fake-active');
-                                }, 500);
-                            }, 50); // Đủ thời gian để browser cập nhật UI
+                                    resetAllEffects();
+                                }, 300);
+                            }, 150); // Độ trễ ngắn để hiển thị hiệu ứng
                         }
                         
                         // Xử lý touch events
                         link.addEventListener('touchstart', function(e) {
-                            // Lưu thời điểm bắt đầu chạm
-                            touchStartTime = Date.now();
                             touchMoved = false;
                             
                             // Lưu trạng thái
                             window.touchState.active = true;
                             window.touchState.lastTouchedLink = this;
                             
-                            // Thêm visual feedback
+                            // Thêm visual feedback ngay lập tức
                             this.classList.add('fake-hover');
                             
                             // Hiệu ứng chạm
@@ -1451,19 +1444,8 @@
                                     easing: 'easeOutQuad'
                                 });
                                 
-                                // Add shine effect
+                                // Add shine effect cho phản hồi trực quan tốt hơn
                                 addShineEffect(this);
-                                
-                                // Đặt timer để mô phỏng nhấn giữ
-                                touchTimer = setTimeout(() => {
-                                    // Hiệu ứng thị giác cho người dùng biết đã sẵn sàng mở link
-                                    anime({
-                                        targets: this,
-                                        scale: 1.06,
-                                        duration: 150,
-                                        easing: 'easeOutBack'
-                                    });
-                                }, TOUCH_DELAY);
                                 
                             } else if (this.closest('#social-links')) {
                                 anime({
@@ -1473,17 +1455,6 @@
                                     duration: 200,
                                     easing: 'easeOutQuad'
                                 });
-                                
-                                // Đặt timer để mô phỏng nhấn giữ
-                                touchTimer = setTimeout(() => {
-                                    // Hiệu ứng thị giác cho người dùng biết đã sẵn sàng mở link
-                                    anime({
-                                        targets: this,
-                                        scale: 1.25,
-                                        duration: 150,
-                                        easing: 'easeOutBack'
-                                    });
-                                }, TOUCH_DELAY);
                             }
                         });
                         
@@ -1491,26 +1462,12 @@
                         link.addEventListener('touchmove', function() {
                             touchMoved = true;
                             window.touchState.active = false;
-                            
-                            // Hủy bỏ timer nếu di chuyển
-                            if (touchTimer) {
-                                clearTimeout(touchTimer);
-                                touchTimer = null;
-                            }
-                            
                             resetAllEffects();
                         });
                         
                         // Cancel touch when interrupted
                         link.addEventListener('touchcancel', function() {
                             window.touchState.active = false;
-                            
-                            // Hủy bỏ timer
-                            if (touchTimer) {
-                                clearTimeout(touchTimer);
-                                touchTimer = null;
-                            }
-                            
                             resetAllEffects();
                         });
                     });
