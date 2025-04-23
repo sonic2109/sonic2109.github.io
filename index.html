@@ -1359,9 +1359,38 @@
                         // Lưu URL gốc
                         const originalURL = link.getAttribute('href');
                         
+                        // Biến theo dõi thời gian chạm
+                        let touchStartTime = 0;
+                        let touchTimer = null;
+                        let touchMoved = false;
+                        const TOUCH_DELAY = 400; // Độ trễ 400ms để xác định chạm có chủ ý
+                        
                         // Prevent default behavior for all events
                         link.addEventListener('click', handleLinkClick);
-                        link.addEventListener('touchend', handleLinkClick);
+                        
+                        // Xử lý kết thúc chạm
+                        link.addEventListener('touchend', function(e) {
+                            e.preventDefault();
+                            
+                            // Hủy bỏ timer
+                            if (touchTimer) {
+                                clearTimeout(touchTimer);
+                                touchTimer = null;
+                            }
+                            
+                            // Kiểm tra nếu đã chạm đủ lâu và không di chuyển
+                            const touchDuration = Date.now() - touchStartTime;
+                            if (touchDuration >= TOUCH_DELAY && !touchMoved && window.touchState.active) {
+                                handleLinkClick(e);
+                            } else {
+                                // Đặt lại trạng thái nếu không mở link
+                                resetAllEffects();
+                                window.touchState.processing = false;
+                            }
+                            
+                            // Reset touchMoved
+                            touchMoved = false;
+                        });
                         
                         function handleLinkClick(e) {
                             e.preventDefault(); // Ngăn chặn hành vi mặc định
@@ -1375,6 +1404,9 @@
                             
                             // Reset hiệu ứng ngay lập tức
                             resetAllEffects();
+                            
+                            // Thêm phản hồi thị giác khi mở link
+                            link.classList.add('fake-active');
                             
                             // Sử dụng setTimeout để đảm bảo browser đã kịp reset UI
                             setTimeout(function() {
@@ -1392,12 +1424,17 @@
                                 // Reset processing state sau một khoảng thời gian
                                 setTimeout(function() {
                                     window.touchState.processing = false;
+                                    link.classList.remove('fake-active');
                                 }, 500);
                             }, 50); // Đủ thời gian để browser cập nhật UI
                         }
                         
                         // Xử lý touch events
                         link.addEventListener('touchstart', function(e) {
+                            // Lưu thời điểm bắt đầu chạm
+                            touchStartTime = Date.now();
+                            touchMoved = false;
+                            
                             // Lưu trạng thái
                             window.touchState.active = true;
                             window.touchState.lastTouchedLink = this;
@@ -1405,6 +1442,7 @@
                             // Thêm visual feedback
                             this.classList.add('fake-hover');
                             
+                            // Hiệu ứng chạm
                             if (this.closest('#links')) {
                                 anime({
                                     targets: this,
@@ -1415,6 +1453,18 @@
                                 
                                 // Add shine effect
                                 addShineEffect(this);
+                                
+                                // Đặt timer để mô phỏng nhấn giữ
+                                touchTimer = setTimeout(() => {
+                                    // Hiệu ứng thị giác cho người dùng biết đã sẵn sàng mở link
+                                    anime({
+                                        targets: this,
+                                        scale: 1.06,
+                                        duration: 150,
+                                        easing: 'easeOutBack'
+                                    });
+                                }, TOUCH_DELAY);
+                                
                             } else if (this.closest('#social-links')) {
                                 anime({
                                     targets: this,
@@ -1423,18 +1473,44 @@
                                     duration: 200,
                                     easing: 'easeOutQuad'
                                 });
+                                
+                                // Đặt timer để mô phỏng nhấn giữ
+                                touchTimer = setTimeout(() => {
+                                    // Hiệu ứng thị giác cho người dùng biết đã sẵn sàng mở link
+                                    anime({
+                                        targets: this,
+                                        scale: 1.25,
+                                        duration: 150,
+                                        easing: 'easeOutBack'
+                                    });
+                                }, TOUCH_DELAY);
                             }
                         });
                         
                         // Cancel touch effect when moving
                         link.addEventListener('touchmove', function() {
+                            touchMoved = true;
                             window.touchState.active = false;
+                            
+                            // Hủy bỏ timer nếu di chuyển
+                            if (touchTimer) {
+                                clearTimeout(touchTimer);
+                                touchTimer = null;
+                            }
+                            
                             resetAllEffects();
                         });
                         
                         // Cancel touch when interrupted
                         link.addEventListener('touchcancel', function() {
                             window.touchState.active = false;
+                            
+                            // Hủy bỏ timer
+                            if (touchTimer) {
+                                clearTimeout(touchTimer);
+                                touchTimer = null;
+                            }
+                            
                             resetAllEffects();
                         });
                     });
@@ -1559,8 +1635,8 @@
             setupBadgesAnimation();
             setupTouchSupport();
             
-            // --- XỬ LÝ HIỆU ỨNG CLICK ---
-            function handleLinkClick() {
+            // --- XỬ LÝ HIỆU ỨNG CLICK CHO DESKTOP ---
+            function handleDesktopEffects() {
                 // Xử lý các liên kết trong #links
                 const contactLinks = document.querySelectorAll('#links a');
                 contactLinks.forEach(link => {
@@ -1606,8 +1682,8 @@
                 });
             }
             
-            // Khởi tạo xử lý hiệu ứng click
-            handleLinkClick();
+            // Khởi tạo xử lý hiệu ứng click cho desktop
+            handleDesktopEffects();
             
             console.log("✅ Initialization complete!");
         });
