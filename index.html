@@ -16,10 +16,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- /// IONICONS /// -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
-
     <!-- /// ANIME.JS /// -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
@@ -892,12 +888,58 @@
                 background-color: rgba(var(--color-primary-rgb), 0.3);
             }
         }
+        
+        body.enter-locked #container {
+            opacity: 0;
+            filter: blur(6px);
+            transform: translateY(12px);
+            pointer-events: none;
+        }
+
+        #enter-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 3000;
+            transition: opacity 0.35s ease;
+            cursor: pointer;
+        }
+
+        #enter-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .enter-text {
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            color: var(--color-text-primary);
+            opacity: 0.9;
+            text-transform: lowercase;
+            user-select: none;
+            animation: enterPulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes enterPulse {
+            0%, 100% { opacity: 0.55; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
-<body>
+<body class="enter-locked">
     <!-- SVG Sprite -->
     <div class="visually-hidden">
         <object data="assets/icons/social-icons.svg" type="image/svg+xml"></object>
+    </div>
+
+    <div id="enter-overlay" role="button" tabindex="0" aria-label="Click to enter">
+        <div class="enter-text">click to enter...</div>
     </div>
 
     <div id="container">
@@ -1285,21 +1327,18 @@
                     });
                 }
             }
-            
             // --- TOUCH SUPPORT FOR MOBILE ---
             function setupTouchSupport() {
                 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 
                 if (isMobile) {
-                    // ===== TẠNG CÁC BIẾN THEO DÕI TRẠNG THÁI =====
-                    // Tạo object theo dõi trạng thái toàn cục
-                    window.touchState = {
+                    // Tạo object theo dõi trạng thái cục bộ
+                    const touchState = {
                         active: false,
                         processing: false,
                         lastTouchedLink: null
                     };
                     
-                    // ===== TẠO PHẦN TỬ DUMMY ĐỂ XỬ LÝ TẤT CẢ CÁC LINKS =====
                     // Tạo một phần tử ẩn để xử lý các links
                     const dummyLink = document.createElement('a');
                     dummyLink.style.display = 'none';
@@ -1308,14 +1347,11 @@
                     dummyLink.rel = 'noopener noreferrer';
                     document.body.appendChild(dummyLink);
                     
-                    // ===== KIỂM TRA SESSION STORAGE KHI TẢI TRANG =====
                     // Reset tất cả hiệu ứng khi trang tải
                     window.addEventListener('load', resetAllEffects);
                     
-                    // ===== HÀM XỬ LÝ TỰ ĐỘNG RESET =====
                     // Reset tất cả hiệu ứng
                     function resetAllEffects() {
-                        console.log("Resetting all effects");
                         const allLinks = document.querySelectorAll('#links a, #social-links a');
                         
                         allLinks.forEach(link => {
@@ -1346,12 +1382,11 @@
                         });
                         
                         // Reset state
-                        window.touchState.active = false;
-                        window.touchState.processing = false;
-                        window.touchState.lastTouchedLink = null;
+                        touchState.active = false;
+                        touchState.processing = false;
+                        touchState.lastTouchedLink = null;
                     }
                     
-                    // ===== XỬ LÝ TẤT CẢ CÁC LIÊN KẾT THỐNG NHẤT =====
                     // Áp dụng cùng một phương pháp cho tất cả các liên kết
                     const allExternalLinks = document.querySelectorAll('#links a, #social-links a');
                     
@@ -1361,7 +1396,18 @@
                         
                         // Biến theo dõi sự kiện chạm
                         let touchMoved = false;
-                        let lastTapTime = 0;
+                        
+                        function openLink() {
+                            if (!originalURL) return;
+
+                            // Ưu tiên window.open trong user-gesture để tăng tỉ lệ mở tab trên mobile
+                            const opened = window.open(originalURL, '_blank', 'noopener,noreferrer');
+                            if (!opened) {
+                                // Fallback
+                                dummyLink.href = originalURL;
+                                dummyLink.click();
+                            }
+                        }
                         
                         // Prevent default behavior for all events
                         link.addEventListener('click', handleLinkClick);
@@ -1371,21 +1417,23 @@
                             e.preventDefault();
                             
                             // Nếu không di chuyển ngón tay, đây là một chạm hợp lệ
-                            if (!touchMoved && window.touchState.active) {
+                            if (!touchMoved && touchState.active) {
                                 // Hiệu ứng phản hồi khi chạm
-                                anime({
-                                    targets: this,
-                                    scale: [1.1, 1],
-                                    duration: 300,
-                                    easing: 'easeOutElastic(1, 0.5)'
-                                });
+                                if (typeof anime !== 'undefined') {
+                                    anime({
+                                        targets: this,
+                                        scale: [1.1, 1],
+                                        duration: 300,
+                                        easing: 'easeOutElastic(1, 0.5)'
+                                    });
+                                }
                                 
                                 // Mở link ngay lập tức
                                 handleLinkClick(e);
                             } else {
                                 // Đặt lại trạng thái nếu không mở link
                                 resetAllEffects();
-                                window.touchState.processing = false;
+                                touchState.processing = false;
                             }
                             
                             // Reset touchMoved
@@ -1397,31 +1445,19 @@
                             e.stopPropagation(); // Ngăn chặn sự kiện lan truyền
                             
                             // Nếu đang xử lý, không làm gì cả
-                            if (window.touchState.processing) return;
-                            window.touchState.processing = true;
+                            if (touchState.processing) return;
+                            touchState.processing = true;
                             
                             // Thêm phản hồi thị giác khi mở link
                             link.classList.add('fake-active');
-                            
-                            // Thêm độ trễ nhỏ để hiển thị hiệu ứng trước khi mở link
+
+                            // Mở link ngay trong user gesture (ưu tiên), rồi reset trạng thái
+                            openLink();
+
                             setTimeout(function() {
-                                // Gán URL vào dummy link
-                                dummyLink.href = originalURL;
-                                
-                                // Mở link trong tab mới
-                                if (dummyLink.click) {
-                                    dummyLink.click();
-                                } else {
-                                    // Fallback nếu click() không được hỗ trợ
-                                    window.open(originalURL, '_blank');
-                                }
-                                
-                                // Reset processing state và hiệu ứng
-                                setTimeout(function() {
-                                    window.touchState.processing = false;
-                                    resetAllEffects();
-                                }, 300);
-                            }, 150); // Độ trễ ngắn để hiển thị hiệu ứng
+                                touchState.processing = false;
+                                resetAllEffects();
+                            }, 250);
                         }
                         
                         // Xử lý touch events
@@ -1429,8 +1465,8 @@
                             touchMoved = false;
                             
                             // Lưu trạng thái
-                            window.touchState.active = true;
-                            window.touchState.lastTouchedLink = this;
+                            touchState.active = true;
+                            touchState.lastTouchedLink = this;
                             
                             // Thêm visual feedback ngay lập tức
                             this.classList.add('fake-hover');
@@ -1461,43 +1497,17 @@
                         // Cancel touch effect when moving
                         link.addEventListener('touchmove', function() {
                             touchMoved = true;
-                            window.touchState.active = false;
+                            touchState.active = false;
                             resetAllEffects();
                         });
                         
                         // Cancel touch when interrupted
                         link.addEventListener('touchcancel', function() {
-                            window.touchState.active = false;
+                            touchState.active = false;
                             resetAllEffects();
                         });
                     });
                     
-                    // ===== THÊM FORCE RESET BẰNG RAF (REQUEST ANIMATION FRAME) =====
-                    // Sử dụng requestAnimationFrame để liên tục kiểm tra và reset hiệu ứng
-                    // khi người dùng rời khỏi trang
-                    let frameId = null;
-                    
-                    function checkVisibilityAndReset() {
-                        // Nếu tab không còn hiển thị, reset tất cả hiệu ứng
-                        if (document.visibilityState !== 'visible') {
-                            resetAllEffects();
-                        }
-                        
-                        // Tiếp tục kiểm tra trong frame tiếp theo
-                        frameId = requestAnimationFrame(checkVisibilityAndReset);
-                    }
-                    
-                    // Bắt đầu kiểm tra
-                    frameId = requestAnimationFrame(checkVisibilityAndReset);
-                    
-                    // Dừng kiểm tra khi trang được đóng để tránh lãng phí tài nguyên
-                    window.addEventListener('beforeunload', function() {
-                        if (frameId) {
-                            cancelAnimationFrame(frameId);
-                        }
-                    });
-                    
-                    // ===== THÊM SỰ KIỆN RESET KHÁC =====
                     // Sự kiện khi tab bị ẩn/hiện
                     document.addEventListener('visibilitychange', resetAllEffects);
                     
@@ -1511,7 +1521,7 @@
                     // Reset sau khi trang đã tải xong nội dung
                     window.addEventListener('DOMContentLoaded', resetAllEffects);
                     
-                    // ===== HÀM THÊM HIỆU ỨNG SHINE =====
+                    // HÀM THÊM HIỆU ỨNG SHINE
                     function addShineEffect(element) {
                         element.style.position = 'relative';
                         element.style.overflow = 'hidden';
@@ -1642,9 +1652,56 @@
             // Khởi tạo xử lý hiệu ứng click cho desktop
             handleDesktopEffects();
             
-            console.log("✅ Initialization complete!");
         });
     </script>
 
+    <audio id="bg-music" loop autoplay playsinline preload="auto" style="display:none;">
+        <!-- Thêm nguồn nhạc của bạn tại đây -->
+        <source src="assets/music/tieng-cho-lofi.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
+
+    <script>
+        // Music Player Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('bg-music');
+            const overlay = document.getElementById('enter-overlay');
+
+            if (!audio) {
+                return;
+            }
+            
+            audio.volume = 0.5;
+
+            const tryPlay = () => audio.play();
+
+            const unlock = () => {
+                document.body.classList.remove('enter-locked');
+                if (overlay) {
+                    overlay.classList.add('hidden');
+                }
+
+                tryPlay().catch(() => {
+                    const playOnInteraction = () => {
+                        tryPlay().catch(() => {});
+                    };
+                    document.addEventListener('click', playOnInteraction, { once: true });
+                    document.addEventListener('keydown', playOnInteraction, { once: true });
+                    document.addEventListener('touchstart', playOnInteraction, { once: true });
+                });
+            };
+
+            if (overlay) {
+                overlay.addEventListener('click', unlock, { once: true });
+                overlay.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        unlock();
+                    }
+                });
+            } else {
+                unlock();
+            }
+        });
+    </script>
 </body>
-</html> 
+</html>

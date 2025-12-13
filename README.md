@@ -1,6 +1,6 @@
 # Bio Webpage - Chú Bé Đần
 
-Phiên bản hiện tại: **0.0.1**
+Phiên bản hiện tại: **0.0.2**
 
 Trang web cá nhân sinh động để giới thiệu thông tin của Chú Bé Đần (Soníc).
 
@@ -17,7 +17,7 @@ Soníc - một người vừa đẹp trai vừa lạnh lùng đến từ Long An
 - Giao diện người dùng hiện đại với hiệu ứng đẹp mắt
 - Hiển thị thông tin cá nhân và sở thích
 - Tích hợp các liên kết mạng xã hội
-- Trình phát nhạc tự động
+- Nhạc nền với overlay "click to enter..." (đảm bảo phát nhạc ổn định trên trình duyệt hiện đại)
 - Thiết kế đáp ứng cho mọi thiết bị (responsive design)
 - Hiệu ứng hoạt họa mượt mà
 
@@ -27,7 +27,7 @@ Soníc - một người vừa đẹp trai vừa lạnh lùng đến từ Long An
 - CSS3
 - JavaScript
 - Font từ Google Fonts
-- Biểu tượng từ Ionicons
+- Anime.js
 
 ## Cài đặt và Sử dụng
 
@@ -36,9 +36,13 @@ Soníc - một người vừa đẹp trai vừa lạnh lùng đến từ Long An
 git clone https://github.com/sonic2109/sonic2109.github.io.git
 ```
 
-2. Mở file `index.html` trong trình duyệt web để xem trang web
+2. Khuyến nghị chạy bằng Live Server (VS Code) hoặc bất kỳ local web server nào để đảm bảo tải file/asset ổn định
 
-3. Chỉnh sửa file để cá nhân hóa:
+3. Nhạc nền:
+   - Đặt file nhạc tại `assets/music/tieng-cho-lofi.mp3`
+   - Khi vào trang sẽ có overlay "click to enter...". Click để vào trang và bắt đầu phát nhạc.
+
+4. Chỉnh sửa file để cá nhân hóa:
    - Thay đổi ảnh avatar trong thư mục `assets/`
    - Cập nhật thông tin cá nhân trong file `index.html`
    - Điều chỉnh CSS trong thẻ `<style>` để thay đổi màu sắc và hiệu ứng
