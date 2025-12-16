@@ -337,18 +337,6 @@
             100%{text-shadow:-.025em 0 0 var(--color-glitch-1),.025em -.025em 0 var(--color-glitch-2),.05em .05em 0 var(--color-glitch-1)}
         }
 
-        /* === CLOCK STYLES === */
-        #clock {
-            font-family: var(--font-secondary);
-            font-size: 0.85rem;
-            color: var(--color-text-secondary);
-            letter-spacing: 1.5px;
-            opacity: 0;
-            transform: translateY(10px);
-            text-shadow: 0 0 3px rgba(var(--color-primary-rgb), 0.3);
-            margin-bottom: 0;
-        }
-
         /* === SECTION HEADING STYLES === */
         .sci-fi-heading {
             font-family: var(--font-secondary);
@@ -572,12 +560,11 @@
         #links a span {
             flex: 1;
             text-align: center;
-            margin-left: -3em;
+            padding-right: 2em; /* Cân bằng với icon bên trái để text căn giữa thực sự */
         }
         #links .icon {
-            width: 2.5em;
-            height: 2.5em;
-            margin-right: 0;
+            width: 2em;
+            height: 2em;
             flex-shrink: 0;
         }
         #links a::before {
@@ -643,6 +630,15 @@
         }
 
         /* === RESPONSIVENESS === */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            #container {
+                max-width: 520px;
+            }
+            #links a {
+                font-size: 1.05rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             :root {
                 --space-lg: 1.8rem;
@@ -678,25 +674,17 @@
             .badge-camera, .badge-location, .badge-language, .badge-love-cat, .badge-hate-cat, .badge-available {
                 border-left-width: 2px;
             }
-            #clock {
-                font-size: 0.8rem;
-            }
-            /* Điều chỉnh cho liên kết trên thiết bị di động */
             #links a {
-                padding: 0.5rem 1rem;
-                gap: var(--space-sm);
+                padding: 0.5rem 0.8rem;
+                font-size: 1rem;
             }
             #links a span {
-                margin-left: -1.5em; /* Giảm margin để đảm bảo không chồng chéo */
-                text-align: center;
-                font-size: 1rem; /* Giảm nhẹ font size cho màn hình nhỏ */
+                font-size: 0.95rem;
+                padding-right: 1.8em;
             }
             #links .icon {
-                width: 2em; /* Giảm nhẹ kích thước icon */
-                height: 2em;
-                margin-right: 0;
-                flex-shrink: 0;
-                min-width: 2em; /* Đảm bảo icon không bị co lại */
+                width: 1.8em;
+                height: 1.8em;
             }
         }
         
@@ -733,23 +721,17 @@
                 border-left-width: 2px;
                 padding-left: 4px; /* Điều chỉnh padding bên trái khi border thu nhỏ */
             }
-            #clock {
-                letter-spacing: 1px;
-            }
             #links a {
-                padding: 0.5rem 0.7rem; /* Điều chỉnh padding để có nhiều không gian hơn */
-                font-size: 1rem;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.95rem;
             }
             #links a span {
-                margin-left: -0.8em; /* Giảm thêm margin trên màn hình cực nhỏ */
-                text-align: center;
-                font-size: 0.9rem; /* Giảm thêm font size */
+                font-size: 0.85rem;
+                padding-right: 1.6em;
             }
             #links .icon {
-                width: 1.8em; /* Tiếp tục giảm kích thước icon */
-                height: 1.8em;
-                flex-shrink: 0;
-                min-width: 1.8em; /* Đảm bảo icon không bị co lại */
+                width: 1.6em;
+                height: 1.6em;
             }
             .skills-container {
                 justify-content: flex-start;
@@ -891,8 +873,8 @@
         
         body.enter-locked #container {
             opacity: 0;
-            filter: blur(6px);
-            transform: translateY(12px);
+            filter: blur(8px);
+            transform: scale(0.95) translateY(20px);
             pointer-events: none;
         }
 
@@ -900,44 +882,153 @@
             position: fixed;
             inset: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: radial-gradient(ellipse at center, rgba(20, 20, 20, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 3000;
-            transition: opacity 0.35s ease;
             cursor: pointer;
+            overflow: hidden;
+        }
+
+        #enter-overlay::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease-out, height 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        #enter-overlay.clicked::before {
+            width: 300vmax;
+            height: 300vmax;
+        }
+
+        #enter-overlay.hiding {
+            animation: overlayZoomOut 0.6s ease-in-out forwards;
+        }
+
+        @keyframes overlayZoomOut {
+            0% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(1.5);
+                pointer-events: none;
+            }
         }
 
         #enter-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
+            display: none;
         }
 
         .enter-text {
             font-family: var(--font-secondary);
-            font-size: 1rem;
-            letter-spacing: 0.12em;
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
             color: var(--color-text-primary);
-            opacity: 0.9;
             text-transform: lowercase;
             user-select: none;
-            animation: enterPulse 1.6s ease-in-out infinite;
+            position: relative;
+            padding: 15px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+            animation: enterGlitch 3s ease-in-out infinite;
         }
 
-        @keyframes enterPulse {
-            0%, 100% { opacity: 0.55; }
-            50% { opacity: 1; }
+        .enter-text::before,
+        .enter-text::after {
+            content: 'click to enter...';
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
         }
+
+        .enter-text::before {
+            color: #ff0040;
+            animation: glitchLeft 3s ease-in-out infinite;
+        }
+
+        .enter-text::after {
+            color: #00ffff;
+            animation: glitchRight 3s ease-in-out infinite;
+        }
+
+        .enter-text:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .enter-hint {
+            font-family: var(--font-primary);
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 20px;
+            letter-spacing: 0.1em;
+            animation: hintPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes enterGlitch {
+            0%, 90%, 100% { 
+                opacity: 0.9;
+                transform: translate(0);
+            }
+            92% { 
+                opacity: 1;
+                transform: translate(-2px, 1px);
+            }
+            94% { 
+                transform: translate(2px, -1px);
+            }
+            96% { 
+                transform: translate(-1px, -1px);
+            }
+            98% { 
+                transform: translate(1px, 1px);
+            }
+        }
+
+        @keyframes glitchLeft {
+            0%, 90%, 100% { opacity: 0; transform: translate(0); }
+            92%, 94% { opacity: 0.8; transform: translate(-3px, 0); }
+            96%, 98% { opacity: 0; transform: translate(0); }
+        }
+
+        @keyframes glitchRight {
+            0%, 90%, 100% { opacity: 0; transform: translate(0); }
+            93%, 95% { opacity: 0.8; transform: translate(3px, 0); }
+            97%, 99% { opacity: 0; transform: translate(0); }
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
     </style>
 </head>
 <body class="enter-locked">
-    <!-- SVG Sprite -->
-    <div class="visually-hidden">
-        <object data="assets/icons/social-icons.svg" type="image/svg+xml"></object>
-    </div>
-
     <div id="enter-overlay" role="button" tabindex="0" aria-label="Click to enter">
         <div class="enter-text">click to enter...</div>
     </div>
@@ -964,7 +1055,7 @@
                         <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                         <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
                     </svg>
-                    LONG AN
+                    TÂY NINH
                 </span>
                 <span class="badge badge-language">
                     <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -1133,22 +1224,6 @@
                 } catch (e) {
                     console.error("Error setting primary RGB:", e);
                     document.documentElement.style.setProperty('--color-primary-rgb', `255, 255, 255`);
-                }
-            }
-            
-            // --- CLOCK UPDATE ---
-            function updateClock() {
-                const clockElement = document.getElementById('clock');
-                if (!clockElement) return;
-                
-                try {
-                    const now = new Date();
-                    const hours = String(now.getHours()).padStart(2, '0');
-                    const minutes = String(now.getMinutes()).padStart(2, '0');
-                    const seconds = String(now.getSeconds()).padStart(2, '0');
-                    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
-                } catch (e) {
-                    console.error("Clock update error:", e);
                 }
             }
             
@@ -1596,11 +1671,15 @@
             setPrimaryColorRGB();
             // Tải liên kết từ JSON và hiển thị
             await renderLinks();
-            initAnimations();
+            // Animations sẽ được gọi sau khi enter overlay đóng
+            // initAnimations();
             setupAvatarAnimation();
             setupSocialLinks();
             setupBadgesAnimation();
             setupTouchSupport();
+            
+            // Expose initAnimations globally để gọi từ enter overlay
+            window.triggerContentAnimations = initAnimations;
             
             // --- XỬ LÝ HIỆU ỨNG CLICK CHO DESKTOP ---
             function handleDesktopEffects() {
@@ -1676,9 +1755,30 @@
             const tryPlay = () => audio.play();
 
             const unlock = () => {
-                document.body.classList.remove('enter-locked');
                 if (overlay) {
-                    overlay.classList.add('hidden');
+                    // Add click effect first
+                    overlay.classList.add('clicked');
+                    
+                    // Start hiding animation after ripple starts
+                    setTimeout(() => {
+                        overlay.classList.add('hiding');
+                        document.body.classList.remove('enter-locked');
+                    }, 150);
+                    
+                    // Hide completely and trigger content animations
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        // Trigger content animations after overlay is hidden
+                        if (typeof window.triggerContentAnimations === 'function') {
+                            window.triggerContentAnimations();
+                        }
+                    }, 750);
+                } else {
+                    document.body.classList.remove('enter-locked');
+                    // Trigger animations immediately if no overlay
+                    if (typeof window.triggerContentAnimations === 'function') {
+                        window.triggerContentAnimations();
+                    }
                 }
 
                 tryPlay().catch(() => {
